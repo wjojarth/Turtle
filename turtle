@@ -1,41 +1,68 @@
-from threading import Thread
-import time
 import turtle
 import random
+from multiprocessing import Process
+a = turtle.Pen()
+i = turtle.Pen()
+i.hideturtle()
+i.penup()
+i.sety(300)
+i.setx(-400)
+i.pendown()
+i.forward(800)
+i.right(90)
+i.forward(600)
+i.right(90)
+i.forward(800)
+i.right(90)
+i.forward(600)
+i.hideturtle()
+i.pensize(10)
 
-def runA():
-    def f():
-        t.forward(10)
-    t=turtle
-    t.showturtle()
-    t.onkey(f, "Right")
-    t.listen()
-    t.mainloop()
-       
-def runB():
-    """
-    b=turtle
-    b.shape("turtle")
-    randx=random.randrange(-100,100,1)
-    randy=random.randrange(-100,100,1)
-    b.setx(randx)
-    b.sety(randy)
-    b.showturtle()
-    """
-    b=1
-    while True:
-        print('B', b)
-        time.sleep(1)
-        b=b+1
+a.penup()
+a.shape("classic")
+a.pensize(10)
+a.resizemode("auto")
+randx = random.randrange(-40,41)*10
+randy = random.randrange(-30,31)*10
+a.setx(randx)
+a.sety(randy)
+
+t = turtle.Pen()
+t.shape("turtle")
+t.penup()
+t.pensize(10)
+t.resizemode("auto")
     
-
-
-if __name__ == "__main__":
-    t1 = Thread(target = runA)
-    t2 = Thread(target = runB)
-    t1.setDaemon(True)
-    t2.setDaemon(True)
-    t1.start()
-    t2.start()
-    while True:
-        pass
+def movea():
+    var = 1
+    while var == 1:
+        am = random.randrange(1,4)
+        if am == 1:
+            a.right(90)
+        elif am == 2:
+            a.left(90)
+        yspot = round(a.ycor())
+        xspot = round(a.xcor())
+        heading = a.heading()
+        if not ((xspot ==400 and heading == 0) or (xspot == -400 and heading == 180) or (yspot ==-300 and heading == 270) or (yspot == 300 and heading == 90)):
+            a.forward(10)
+               #print(xspot, yspot, heading)
+        def draw():
+            t.forward(10)
+            xspott = round(t.xcor())
+            yspott = round(t.ycor())
+            if yspott-30<=yspot <= yspott+30  and  xspott-30<=xspot <= xspott+30:
+                 i.write("You won!")
+                 var = 2
+        def right(): t.right(90)
+        def left(): t.left(90)
+        turtle.onkey(draw,"Up")
+        turtle.onkey(right,"Right")
+        turtle.onkey(left,"Left")
+        xspott = round(t.xcor())
+        yspott = round(t.ycor())
+        if yspott-30<=yspot <= yspott+30  and  xspott-30<=xspot <= xspott+30:
+             i.write("You won!")
+             var = 2
+        turtle.listen()
+movea()
