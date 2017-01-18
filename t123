@@ -1,0 +1,41 @@
+from threading import Thread
+import time
+import turtle
+import random
+
+def runA():
+    def f():
+        t.forward(10)
+    t=turtle
+    t.showturtle()
+    t.onkey(f, "Right")
+    t.listen()
+    t.mainloop()
+       
+def runB():
+    """
+    b=turtle
+    b.shape("turtle")
+    randx=random.randrange(-100,100,1)
+    randy=random.randrange(-100,100,1)
+    b.setx(randx)
+    b.sety(randy)
+    b.showturtle()
+    """
+    b=1
+    while True:
+        print('B', b)
+        time.sleep(1)
+        b=b+1
+    
+
+
+if __name__ == "__main__":
+    t1 = Thread(target = runA)
+    t2 = Thread(target = runB)
+    t1.setDaemon(True)
+    t2.setDaemon(True)
+    t1.start()
+    t2.start()
+    while True:
+        pass
