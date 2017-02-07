@@ -1,8 +1,8 @@
 import turtle
 import random
 from multiprocessing import Process
-a = turtle.Pen()
 i = turtle.Pen()
+turtle.bgcolor("blue")
 i.hideturtle()
 i.penup()
 i.sety(300)
@@ -18,16 +18,21 @@ i.forward(600)
 i.hideturtle()
 i.pensize(10)
 
+a = turtle.Pen()
 a.penup()
-a.shape("classic")
-a.pensize(10)
-a.resizemode("auto")
+a.hideturtle()
 randx = random.randrange(-40,41)*10
 randy = random.randrange(-30,31)*10
 a.setx(randx)
 a.sety(randy)
+a.color("red")
+a.shape("circle")
+a.pensize(10)
+a.resizemode("auto")
+a.showturtle()
 
 t = turtle.Pen()
+t.color("green")
 t.shape("turtle")
 t.penup()
 t.pensize(10)
@@ -48,12 +53,17 @@ def movea():
             a.forward(10)
                #print(xspot, yspot, heading)
         def draw():
-            t.forward(10)
             xspott = round(t.xcor())
             yspott = round(t.ycor())
-            if yspott-30<=yspot <= yspott+30  and  xspott-30<=xspot <= xspott+30:
-                 i.write("You won!")
-                 var = 2
+            headingt=t.heading()
+            if not ((xspott ==400 and headingt == 0) or (xspott == -400 and headingt == 180) or (yspott ==-300 and headingt == 270) or (yspott == 300 and headingt == 90)):
+                t.forward(10)
+                xspott = round(t.xcor())
+                yspott = round(t.ycor())
+            else:pass
+            #if yspott-30<=yspot <= yspott+30  and  xspott-30<=xspot <= xspott+30:
+             #    i.write("You won!")
+              #   var = 2
         def right(): t.right(90)
         def left(): t.left(90)
         turtle.onkey(draw,"Up")
@@ -62,7 +72,12 @@ def movea():
         xspott = round(t.xcor())
         yspott = round(t.ycor())
         if yspott-30<=yspot <= yspott+30  and  xspott-30<=xspot <= xspott+30:
-             i.write("You won!")
+             i.clear()
+             i.color("white")
+             i.write("You won!",font=("Arial",53,"normal"))
              var = 2
+        else:
+            i.color("white")
+            i.write("Let's go!",font=("Arial",53,"normal"))
         turtle.listen()
 movea()
