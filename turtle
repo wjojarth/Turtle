@@ -18,6 +18,17 @@ i.forward(600)
 i.hideturtle()
 i.pensize(10)
 
+x = turtle.Pen()
+x.penup()
+x.hideturtle()
+x.pensize(10)
+x.resizemode("auto")
+randx = random.randrange(-40,41)*10
+randy = random.randrange(-30,31)*10
+x.setx(randx)
+x.sety(randy)
+x.showturtle()
+
 a = turtle.Pen()
 a.penup()
 a.hideturtle()
@@ -39,6 +50,7 @@ t.pensize(10)
 t.resizemode("auto")
     
 def movea():
+#Move a turtle
     var = 1
     while var == 1:
         am = random.randrange(1,4)
@@ -52,6 +64,28 @@ def movea():
         if not ((xspot ==400 and heading == 0) or (xspot == -400 and heading == 180) or (yspot ==-300 and heading == 270) or (yspot == 300 and heading == 90)):
             a.forward(10)
                #print(xspot, yspot, heading)
+
+#Move x turtle
+#      Defining t turtle's spot
+        dead = 0
+        xspott = round(t.xcor())
+        yspott = round(t.ycor())
+        yspotx = round(x.ycor())
+        xspotx = round(x.xcor())
+        if xspotx > xspott: x.seth(180)
+        elif xspotx < xspott: x.seth(0)
+        elif xspotx == xspott:
+            if yspotx < yspott:  x.seth(90)
+            elif yspotx > yspott: x.seth(270)
+        x.forward(10)
+        if yspott-30<=yspotx <= yspott+30  and  xspott-30<=xspotx <= xspott+30:
+             i.clear()
+             i.color("white")
+             dead = 1
+             var = 2
+             i.write("You lose!",font=("Arial",53,"normal"))
+        
+#Move t turtle
         def draw():
             xspott = round(t.xcor())
             yspott = round(t.ycor())
@@ -69,6 +103,8 @@ def movea():
         turtle.onkey(draw,"Up")
         turtle.onkey(right,"Right")
         turtle.onkey(left,"Left")
+
+#Check if a and t are meeting
         xspott = round(t.xcor())
         yspott = round(t.ycor())
         if yspott-30<=yspot <= yspott+30  and  xspott-30<=xspot <= xspott+30:
@@ -77,7 +113,13 @@ def movea():
              i.write("You won!",font=("Arial",53,"normal"))
              var = 2
         else:
-            i.color("white")
-            i.write("Let's go!",font=("Arial",53,"normal"))
+            if dead == 0:
+                i.color("white")
+                i.write("Let's go!",font=("Arial",53,"normal"))
         turtle.listen()
+
+#Start program
 movea()
+
+    
+    
