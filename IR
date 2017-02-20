@@ -1,0 +1,22 @@
+import RPi.GPIO as GPIO
+irpin = 11
+count = 0
+def setup():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(irpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+def cnt(ev=None):
+    global count
+    count = count + 1
+    print("Recived infared. cnt = ", count)
+def loop():
+    GPIO.add_event_detect(irpin, GPIO.FALLING, callback = cnt)
+    '''while True:
+        pass'''
+def destroy():
+    GPIO.cleanup()
+if __name__=='__main__':
+    setup()
+    try:
+        loop()
+    except KeyboardInterrupt:
+        destroy()
